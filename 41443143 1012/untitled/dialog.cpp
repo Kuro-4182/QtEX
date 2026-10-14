@@ -66,4 +66,23 @@ void Dialog::doPushBtn(){
 
     }
 
+    if (btn == filePushBtn) {
+        QString fileName = QFileDialog::getOpenFileName(this,QStringLiteral("打開檔案"),".",QStringLiteral("任何檔案(*.*);;文字檔(*.txt);;XML檔(*.xml)"));
+        displayTextEdit->setText(fileName);
+    }
+
+    if (btn == progressPushBtn) {
+        QProgressDialog progress("複製檔案中...","取消",0,1000,this);
+        progress.setWindowTitle("進度對話和展示");
+        progress.show();
+        for(int i=0;i<1000000;i++){
+            progress.setValue(i);
+            qApp->processEvents();
+            if(progress.wasCanceled()){
+                break;
+            }
+            qDebug()<<i;
+        }
+    }
+
 }
